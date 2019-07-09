@@ -18,3 +18,7 @@
 .heading{
     text-align: center;
 }
+
+#is-answer{
+    display: none;
+}
