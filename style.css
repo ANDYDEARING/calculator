@@ -1,0 +1,19 @@
+.calc-button{
+    width: 60px;
+}
+
+.display {
+    width: 248px;
+    height: 28px;
+    margin-bottom: 8px;
+}
+
+.calc-table{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.heading{
+    text-align: center;
+}
