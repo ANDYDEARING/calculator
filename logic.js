@@ -1,5 +1,5 @@
 function evaluateExpression(expression){
-    return 55
+    return math.evaluate(expression)
 }
 
 let buttonList = document.querySelectorAll(".calc-button")
