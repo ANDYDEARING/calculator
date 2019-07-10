@@ -2,7 +2,6 @@
 let answer = false
 
 // return error on invalid input
-// AREA FOR IMPROVEMENT: could find a way to track an answer without "="
 function evaluateExpression(expression){
     try {
         return math.evaluate(expression)
@@ -11,19 +10,24 @@ function evaluateExpression(expression){
     }
 }
 
-// removes the default 0 on a click event in the display
 // AREA FOR IMPROVEMENT: could change class selectors to ids
-// AREA FOR IMPROVEMENT: could find a way to track an answer without "="
-// QUESTION FOR CLASS: place to hide a boolean?
+
+// removes the default 0 on a click event in the display
 document.querySelector(".display").addEventListener('click', function(){
     if (document.querySelector(".display").value === "0"){
         document.querySelector(".display").value = ''
 
-    // if the user clicks on the display after an answer, the "=" is removed
-    } else if (document.querySelector(".display").value[0] === "=" ){
+    // if the user clicks on the display move cursor to the end
+    } else {
+
+        // trick to force cursor left: add a space then delete it
+        document.querySelector(".display").value += " "
         tempArray = document.querySelector(".display").value.split('')
-        tempArray.splice(0,2)
+        tempArray.splice(tempArray.length-1,1)
         document.querySelector(".display").value = tempArray.join('')
+
+        // in case it was an answer that was clicked
+        answer = false
     }
 })
 
@@ -46,35 +50,32 @@ for (let button of buttonList){
         // if "equals", evaluate and add a "= " to the answer
         if (button.value==="equals"){
             expression = document.querySelector(".display").value
-            document.querySelector(".display").value = `= ${evaluateExpression(expression)}`
+            document.querySelector(".display").value = `${evaluateExpression(expression)}`
+            answer = true
 
         // if clear, add the default 0 back
         } else if (button.value==="clear"){
             document.querySelector(".display").value = "0"
+            answer = false
 
         } else {
-
+            
             // if the display is currently 0 or an answer
-            if ( (document.querySelector(".display").value === "0") || 
-                (document.querySelector(".display").value[0] === "=" ) ){
+            if ( (document.querySelector(".display").value === "0") || (answer) ){
+                
+                // change the answer state
+                answer = false
 
-                    // if an operand is pressed
-                    if ((isNaN(button.value))&&!(button.value===".")){
+                // and if an operand is pressed
+                if ((isNaN(button.value))&&!(button.value===".")){
 
-                        // remove "= " if the array is long enough to have been an answer
-                        if (document.querySelector(".display").value.length > 2){
-                            tempArray = document.querySelector(".display").value.split('')
-                            tempArray.splice(0,2)
-                            document.querySelector(".display").value = tempArray.join('')
-                        }
+                    // then append the operand
+                    document.querySelector(".display").value += button.value
 
-                        // then append the operand
-                        document.querySelector(".display").value += button.value
-
-                    // otherwise overwrite the display
-                    } else {
-                        document.querySelector(".display").value = button.value
-                    }
+                // otherwise overwrite the display
+                } else {
+                    document.querySelector(".display").value = button.value
+                }
 
             // otherwise simply add the latest button press to the string
             } else {
