@@ -42,25 +42,29 @@ for (let button of buttonList){
         } else if (button.value==="clear"){
             document.querySelector(".display").value = "0"
 
-        // otherwise
         } else {
 
-            // add the button value without the 0 if first input
-            // AREA FOR IMPROVEMENT: could keep the 0 on an operand
-            if (document.querySelector(".display").value === "0"){
-                document.querySelector(".display").value = button.value
+            // if the display is currently 0 or an answer
+            if ( (document.querySelector(".display").value === "0") || 
+                (document.querySelector(".display").value[0] === "=" ) ){
 
-            // if an answer is on the display, keep the number if an operand is
-            // pressed, otherwise delete the answer and begin anew
-            } else if (document.querySelector(".display").value[0] === "=" ){
-                if (isNaN(button.value)){
-                    tempArray = document.querySelector(".display").value.split('')
-                    tempArray.splice(0,2)
-                    document.querySelector(".display").value = tempArray.join('')
-                    document.querySelector(".display").value += button.value
-                } else {
-                    document.querySelector(".display").value = button.value
-                }
+                    // if an operand is pressed
+                    if ((isNaN(button.value))&&!(button.value===".")){
+                        
+                        // remove "= " if the array is long enough to have been an answer
+                        if (document.querySelector(".display").value.length > 2){
+                            tempArray = document.querySelector(".display").value.split('')
+                            tempArray.splice(0,2)
+                            document.querySelector(".display").value = tempArray.join('')
+                        }
+
+                        // then append the operand
+                        document.querySelector(".display").value += button.value
+
+                    // otherwise overwrite the display
+                    } else {
+                        document.querySelector(".display").value = button.value
+                    }
 
             // otherwise simply add the latest button press to the string
             } else {
@@ -68,11 +72,11 @@ for (let button of buttonList){
             }
         }
 
-        // special cases for .
+        // special cases for "."
         if (button.value === "."){
             checkIndex = document.querySelector(".display").value.length - 2
 
-            // if a . is pressed right away, change to 0.
+            // if a . is pressed right away, change to "0."
             if (checkIndex < 0) {
                 document.querySelector(".display").value = "0."
 
