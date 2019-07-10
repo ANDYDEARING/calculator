@@ -1,3 +1,6 @@
+// track if currently displayed number is an answer
+let answer = false
+
 // return error on invalid input
 // AREA FOR IMPROVEMENT: could find a way to track an answer without "="
 function evaluateExpression(expression){
@@ -11,9 +14,16 @@ function evaluateExpression(expression){
 // removes the default 0 on a click event in the display
 // AREA FOR IMPROVEMENT: could change class selectors to ids
 // AREA FOR IMPROVEMENT: could find a way to track an answer without "="
+// QUESTION FOR CLASS: place to hide a boolean?
 document.querySelector(".display").addEventListener('click', function(){
     if (document.querySelector(".display").value === "0"){
         document.querySelector(".display").value = ''
+
+    // if the user clicks on the display after an answer, the "=" is removed
+    } else if (document.querySelector(".display").value[0] === "=" ){
+        tempArray = document.querySelector(".display").value.split('')
+        tempArray.splice(0,2)
+        document.querySelector(".display").value = tempArray.join('')
     }
 })
 
@@ -50,7 +60,7 @@ for (let button of buttonList){
 
                     // if an operand is pressed
                     if ((isNaN(button.value))&&!(button.value===".")){
-                        
+
                         // remove "= " if the array is long enough to have been an answer
                         if (document.querySelector(".display").value.length > 2){
                             tempArray = document.querySelector(".display").value.split('')
