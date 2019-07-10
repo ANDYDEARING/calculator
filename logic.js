@@ -49,7 +49,7 @@ let buttonList = document.querySelectorAll(".calc-button")
 for (let button of buttonList){
     button.addEventListener('click', function(){
 
-        // if "equals", evaluate and add a "= " to the answer
+        // if "equals", evaluate
         if (button.value==="equals"){
             expression = document.querySelector(".display").value
             document.querySelector(".display").value = `${evaluateExpression(expression)}`
