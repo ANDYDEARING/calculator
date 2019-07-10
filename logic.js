@@ -31,9 +31,11 @@ document.querySelector(".display").addEventListener('click', function(){
     }
 })
 
-// allows the user to press enter to evaluate the display when typing
 // AREA FOR IMPROVEMENT: could add functionality for all keys and shift-
-// accessible operands. Need to override defaults on key presses. JQuery?
+// accessible operands. Need to override defaults on key presses, especially
+// highlight on button "presses" with keyboard.
+
+// allows the user to press enter to evaluate the display when typing
 document.querySelector(".display").addEventListener("keydown", function(event){
     if (event.keyCode === 13) {
         document.querySelector(".equals").click()
